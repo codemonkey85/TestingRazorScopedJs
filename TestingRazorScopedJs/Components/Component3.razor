@@ -7,6 +7,7 @@
         <button class="btn btn-secondary" @onclick=TestVoidParam>Test Void Param</button>
         <button class="btn btn-secondary" @onclick=TestValue>Test Value</button>
         <button class="btn btn-secondary" @onclick=TestValueParam>Test Value Param</button>
+        <button class="btn btn-secondary" @onclick=TestGlobalJsFunction>Test global JS function</button>
     </div>
 </div>
 
@@ -18,10 +19,6 @@
         if (!JsInteropService.ModuleInitialized(jsPath))
         {
             JsInteropService.InitializeModule(jsPath);
-        }
-        else
-        {
-            Console.WriteLine("Already initialized!");
         }
     }
 
@@ -41,6 +38,11 @@
     {
         CheckModuleIsInitialized();
         Console.WriteLine(await JsInteropService.InvokeWithModuleAsync<string>(jsPath, "testValueFunction"));
+    }
+
+    private async Task TestGlobalJsFunction()
+    {
+        await JsInteropService.ConfirmDialog("This is a test of the global JS function ConfirmDialog.");
     }
 
     private async Task TestValueParam()
