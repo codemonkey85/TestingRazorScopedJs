@@ -1,0 +1,51 @@
+﻿@page "/component2"
+
+<div>
+    <h3>Component2</h3>
+    <div>
+        <button class="btn btn-secondary" @onclick=TestVoid>Test Void</button>
+        <button class="btn btn-secondary" @onclick=TestVoidParam>Test Void Param</button>
+        <button class="btn btn-secondary" @onclick=TestValue>Test Value</button>
+        <button class="btn btn-secondary" @onclick=TestValueParam>Test Value Param</button>
+    </div>
+</div>
+
+@code {
+    private const string jsPath = $"/{nameof(Components)}/{nameof(Component2)}.razor.js";
+
+    private void CheckModuleIsInitialized()
+    {
+        if (!JsInteropService.ModuleInitialized(jsPath))
+        {
+            JsInteropService.InitializeModule(jsPath);
+        }
+        else
+        {
+            Console.WriteLine("Already initialized!");
+        }
+    }
+
+    private async Task TestVoid()
+    {
+        CheckModuleIsInitialized();
+        await JsInteropService.InvokeVoidAsync(jsPath, "testVoidFunction");
+    }
+
+    private async Task TestVoidParam()
+    {
+        CheckModuleIsInitialized();
+        await JsInteropService.InvokeVoidAsync(jsPath, "testVoidFunctionParam", nameof(Component2));
+    }
+
+    private async Task TestValue()
+    {
+        CheckModuleIsInitialized();
+        Console.WriteLine(await JsInteropService.InvokeAsync<string>(jsPath, "testValueFunction"));
+    }
+
+    private async Task TestValueParam()
+    {
+        CheckModuleIsInitialized();
+        Console.WriteLine(await JsInteropService.InvokeAsync<string>(jsPath, "testValueFunctionParam", nameof(Component2)));
+    }
+}
