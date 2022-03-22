@@ -58,13 +58,13 @@ public class JsInteropService : IJsInteropService
         await _jsRuntime.InvokeVoidAsync(method, args);
     }
 
-    public async Task<T> InvokeAsync<T>(string jsPath, string method, params object[] args)
+    public async Task<T> InvokeWithModuleAsync<T>(string jsPath, string method, params object[] args)
     {
         IJSObjectReference? module = await GetModule(jsPath);
         return await module.InvokeAsync<T>(method, args);
     }
 
-    public async Task InvokeVoidAsync(string jsPath, string method, params object[] args)
+    public async Task InvokeVoidWithModuleAsync(string jsPath, string method, params object[] args)
     {
         IJSObjectReference? module = await GetModule(jsPath);
         await module.InvokeVoidAsync(method, args);

@@ -7,6 +7,7 @@
         <button class="btn btn-secondary" @onclick=TestVoidParam>Test Void Param</button>
         <button class="btn btn-secondary" @onclick=TestValue>Test Value</button>
         <button class="btn btn-secondary" @onclick=TestValueParam>Test Value Param</button>
+        <button class="btn btn-secondary" @onclick=TestBasicJsFunction>Test basic JS function</button>
     </div>
 </div>
 
@@ -28,24 +29,29 @@
     private async Task TestVoid()
     {
         CheckModuleIsInitialized();
-        await JsInteropService.InvokeVoidAsync(jsPath, "testVoidFunction");
+        await JsInteropService.InvokeVoidWithModuleAsync(jsPath, "testVoidFunction");
     }
 
     private async Task TestVoidParam()
     {
         CheckModuleIsInitialized();
-        await JsInteropService.InvokeVoidAsync(jsPath, "testVoidFunctionParam", nameof(Component1));
+        await JsInteropService.InvokeVoidWithModuleAsync(jsPath, "testVoidFunctionParam", nameof(Component1));
     }
 
     private async Task TestValue()
     {
         CheckModuleIsInitialized();
-        Console.WriteLine(await JsInteropService.InvokeAsync<string>(jsPath, "testValueFunction"));
+        Console.WriteLine(await JsInteropService.InvokeWithModuleAsync<string>(jsPath, "testValueFunction"));
     }
 
     private async Task TestValueParam()
     {
         CheckModuleIsInitialized();
-        Console.WriteLine(await JsInteropService.InvokeAsync<string>(jsPath, "testValueFunctionParam", nameof(Component1)));
+        Console.WriteLine(await JsInteropService.InvokeWithModuleAsync<string>(jsPath, "testValueFunctionParam", nameof(Component1)));
+    }
+
+    private async Task TestBasicJsFunction()
+    {
+        await JsInteropService.InvokeVoidAsync("alert", "This is a test.");
     }
 }

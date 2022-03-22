@@ -28,24 +28,24 @@
     private async Task TestVoid()
     {
         CheckModuleIsInitialized();
-        await JsInteropService.InvokeVoidAsync(jsPath, "testVoidFunction");
+        await JsInteropService.InvokeVoidWithModuleAsync(jsPath, "testVoidFunction");
     }
 
     private async Task TestVoidParam()
     {
         CheckModuleIsInitialized();
-        await JsInteropService.InvokeVoidAsync(jsPath, "testVoidFunctionParam", nameof(Component3));
+        await JsInteropService.InvokeVoidWithModuleAsync(jsPath, "testVoidFunctionParam", nameof(Component3));
     }
 
     private async Task TestValue()
     {
         CheckModuleIsInitialized();
-        Console.WriteLine(await JsInteropService.InvokeAsync<string>(jsPath, "testValueFunction"));
+        Console.WriteLine(await JsInteropService.InvokeWithModuleAsync<string>(jsPath, "testValueFunction"));
     }
 
     private async Task TestValueParam()
     {
         CheckModuleIsInitialized();
-        Console.WriteLine(await JsInteropService.InvokeAsync<string>(jsPath, "testValueFunctionParam", nameof(Component3)));
+        Console.WriteLine(await JsInteropService.InvokeWithModuleAsync<string>(jsPath, "testValueFunctionParam", nameof(Component3)));
     }
 }
